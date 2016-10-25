@@ -32,7 +32,7 @@ test:
 deploy:
   stage: deploy
   script:
-    - ./deploy
+    - ./gradlew installArchives
 
 after_script:
   - echo "End CI"
