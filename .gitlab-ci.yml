@@ -19,7 +19,7 @@ build:
     - ./gradlew installArchives
   artifacts:
     paths:
-      - ./app/build/outputs/*.aar
+      - ./app/build/outputs/aar/*.aar
     expire_in: 1 week
   only:
     - master
