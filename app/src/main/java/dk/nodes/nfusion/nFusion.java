@@ -26,6 +26,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
 import dk.nodes.nfusion.interfaces.IEndPoint;
+import dk.nodes.nfusion.interfaces.IErrorHandler;
 import dk.nodes.nfusion.interfaces.ILog;
 import dk.nodes.nfusion.interfaces.ISubscription;
 import dk.nodes.nfusion.util.DefaultLog;
@@ -55,6 +56,7 @@ public class nFusion implements Runnable, Application.ActivityLifecycleCallbacks
     ILog log;
     boolean debug = false;
     boolean isApplicationPaused = false;
+    IErrorHandler globalErrorHandler = null;
 
     ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -239,6 +241,14 @@ public class nFusion implements Runnable, Application.ActivityLifecycleCallbacks
             IEndPoint ep = endPointMap.get(cls);
             ep.clearCache(context, model_cls);
         }
+    }
+
+    public IErrorHandler getGlobalErrorHandler() {
+        return globalErrorHandler;
+    }
+
+    public void setGlobalErrorHandler(IErrorHandler globalErrorHandler) {
+        this.globalErrorHandler = globalErrorHandler;
     }
 
     public OkHttpClient getHttpClient() {

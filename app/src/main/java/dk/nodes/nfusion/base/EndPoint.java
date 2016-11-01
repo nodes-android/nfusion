@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import dk.nodes.nfusion.EndPointError;
 import dk.nodes.nfusion.EndPointRequest;
+import dk.nodes.nfusion.interfaces.IErrorHandler;
 import dk.nodes.nfusion.interfaces.ILog;
 import dk.nodes.nfusion.nFusion;
 import dk.nodes.nfusion.interfaces.IAuthentication;
@@ -235,6 +236,19 @@ public abstract class EndPoint<T> implements IEndPoint<T>, ICacheListener<T> {
             return;
         // Get a handler that can be used to post to the main thread
         Handler mainHandler = new Handler(context.getMainLooper());
+        // call global error handler if one is set
+        final IErrorHandler globalErrorHandler = nFusion.instance().getGlobalErrorHandler();
+        if(globalErrorHandler != null)
+        {
+            mainHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    globalErrorHandler.onEndPointError(sub.getEndPointClass(), ep_error);
+                }
+            });
+        }
+
+        // call subscriptions on error
         Runnable myRunnable = new Runnable() {
             @Override
             public void run()
