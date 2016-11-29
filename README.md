@@ -60,6 +60,7 @@ compile('dk.nodes.nfusion:v1:+')
 
 ## Dependencies
 - OkHTTP
+- OkHTTP:logging-interceptor
 - Google GSON
 
 
