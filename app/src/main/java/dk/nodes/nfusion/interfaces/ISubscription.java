@@ -14,6 +14,7 @@ package dk.nodes.nfusion.interfaces;
 
 import dk.nodes.nfusion.EndPointError;
 import dk.nodes.nfusion.EndPointRequest;
+import dk.nodes.nfusion.util.ProgressRequestBody;
 
 /**
  * Created by bison on 05/03/16.
@@ -23,6 +24,12 @@ public interface ISubscription<T> {
     void onError(EndPointError error);
     void onCacheCleared();
     void onShowProgress();
+    /**
+     * calls-out the progress of the current request
+     * The <link {@link EndPointRequest} must contain a <link {@link ProgressRequestBody}
+     * @param f progress, range is [0-1]
+     */
+    void onProgressChanged(float f);
     void onHideProgress();
 
     void subscribe();

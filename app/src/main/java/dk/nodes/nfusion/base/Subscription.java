@@ -64,9 +64,7 @@ public abstract class Subscription<T> implements ISubscription<T> {
 
     @Override
     public void request() {
-        EndPointRequest request = new EndPointRequest();
-        request.setSubscription(this);
-        nFusion.instance().queueRequest(request);
+        request(new EndPointRequest());
     }
 
     @Override
@@ -92,6 +90,11 @@ public abstract class Subscription<T> implements ISubscription<T> {
         EndPointRequest request = new EndPointRequest();
         request.setSequential(true);
         request(request);
+    }
+
+    @Override
+    public void onProgressChanged(float f) {
+
     }
 
     // TODO make kickass generic error handler shaming the implementer
