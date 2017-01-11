@@ -5,11 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
 
-
 import java.io.IOException;
-import java.security.SecureRandom;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,13 +13,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.X509TrustManager;
 
 import dk.nodes.nfusion.interfaces.IEndPoint;
 import dk.nodes.nfusion.interfaces.IErrorHandler;
@@ -94,7 +83,6 @@ public class nFusion implements Runnable, Application.ActivityLifecycleCallbacks
 
         httpClient = new OkHttpClient();
         OkHttpClient.Builder builder = httpClient.newBuilder();
-        builder.sslSocketFactory(getGullibleSSLSocketFactory());
         builder.connectTimeout(60, TimeUnit.SECONDS);
         builder.writeTimeout(60, TimeUnit.SECONDS);
         builder.readTimeout(60, TimeUnit.SECONDS);
@@ -120,7 +108,7 @@ public class nFusion implements Runnable, Application.ActivityLifecycleCallbacks
     public void setTimeouts(int connect, int read, int write)
     {
         OkHttpClient.Builder builder = httpClient.newBuilder();
-        builder.sslSocketFactory(getGullibleSSLSocketFactory());
+        //builder.sslSocketFactory(getGullibleSSLSocketFactory());
         builder.connectTimeout(connect, TimeUnit.SECONDS);
         builder.writeTimeout(read, TimeUnit.SECONDS);
         builder.readTimeout(write, TimeUnit.SECONDS);
@@ -285,6 +273,7 @@ public class nFusion implements Runnable, Application.ActivityLifecycleCallbacks
      * (but not all that common)
      * @return SSLSocketFactory that doesn't trow invalid cert exceptions. Use with http client
      */
+    /*
     public static SSLSocketFactory getGullibleSSLSocketFactory() {
         try {
             HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {
@@ -315,6 +304,7 @@ public class nFusion implements Runnable, Application.ActivityLifecycleCallbacks
         }
         return null;
     }
+    */
 
     public ILog log() {
         return log;
