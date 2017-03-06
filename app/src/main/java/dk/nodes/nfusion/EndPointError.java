@@ -30,8 +30,8 @@ public class EndPointError {
             "TIMEOUT_ERROR"};
     public int code = -1;
     public int httpCode = -1;
-    // you're not guaranteed to have any of this crap depending on where the error happened,
-    // remember your null checks laddies. (Dette gælder også det jyske nåååll)
+    // you're not guaranteed to have any of this depending on where the error happened,
+    // remember your null checks.
     public Response httpResponse;
     public Request httpRequest;
     public String message = "";
